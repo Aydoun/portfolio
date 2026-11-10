@@ -1,0 +1,109 @@
+---
+import { profile } from '../data/resume';
+
+const links = [
+  { href: '/', label: 'Resume' },
+  { href: '/blog/', label: 'Writing' },
+  { href: '/play/', label: 'Playground' },
+];
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="wrap">
+  <a href="/" class="mark" aria-label={`${profile.name}, home`}>
+    <span class="mark-name">{profile.name}</span>
+  </a>
+  <nav aria-label="Main">
+    {
+      links.map((l) => (
+        <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+          {l.label}
+        </a>
+      ))
+    }
+    <button class="theme" type="button" aria-label="Toggle colour theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+        <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem;
+  }
+  .mark {
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-size: 0.9375rem;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--ink);
+  }
+  nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.35em;
+  }
+  .theme {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: none;
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .theme:hover {
+    color: var(--accent);
+    border-color: currentColor;
+  }
+  @media (max-width: 560px) {
+    .mark-name {
+      font-size: 0;
+    }
+    .mark-name::before {
+      content: 'M. A. Aydoun';
+      font-size: 1.2rem;
+    }
+    nav {
+      gap: 0.9rem;
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.theme');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+</script>
