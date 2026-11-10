@@ -11,6 +11,8 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/mohamed-amine-aydoun-5799b481',
   // TODO: add your GitHub URL if you want it shown
   github: '',
+  // Path to a photo in /public. Set to '' to show the initials placeholder instead.
+  photo: '/me.jpg',
   headline:
     'I build and lead frontend for large web products, with more than ten years in the JavaScript ecosystem.',
   about: [
