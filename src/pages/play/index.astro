@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Add a game: create src/pages/play/<name>.astro and list it here.
+const games: { href: string; title: string; blurb: string }[] = [];
+---
+
+<Base title="Playground" description="Small games and interactive experiments, built for fun.">
+  <div class="wrap page">
+    <p class="label">Playground</p>
+    <h1>Small games and experiments, <em>built for fun</em>.</h1>
+    {
+      games.length === 0 ? (
+        <div class="soon">
+          <p>The first experiment is still being built. Come back soon.</p>
+        </div>
+      ) : (
+        <ul class="games">
+          {games.map((g) => (
+            <li>
+              <a href={g.href}>
+                <h2>{g.title}</h2>
+                <p>{g.blurb}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .page {
+    padding-block: clamp(3rem, 8vw, 5rem) 3rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.75rem);
+    max-width: 18ch;
+    margin: 1.25rem 0 3rem;
+  }
+  h1 em {
+    color: var(--accent);
+  }
+  .soon {
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--rule);
+    border-radius: 0.75rem;
+    text-align: center;
+    color: var(--ink-3);
+  }
+  .soon p {
+    margin: 0;
+  }
+  .games {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+  .games a {
+    display: block;
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    text-decoration: none;
+  }
+  .games a:hover {
+    border-color: var(--accent);
+  }
+  .games h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .games p {
+    margin: 0;
+    color: var(--ink-2);
+  }
+</style>

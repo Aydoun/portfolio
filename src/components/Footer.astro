@@ -1,0 +1,31 @@
+---
+import { profile } from '../data/resume';
+const year = new Date().getFullYear();
+---
+
+<footer class="wrap">
+  <span>© {year} {profile.name}</span>
+  <span class="links">
+    <a href={`mailto:${profile.email}`}>Email</a>
+    <a href={profile.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+    {profile.github && <a href={profile.github} rel="me noopener" target="_blank">GitHub</a>}
+  </span>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 2.5rem 3rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.875rem;
+    color: var(--ink-3);
+  }
+  .links {
+    display: flex;
+    gap: 1.25rem;
+  }
+</style>
